@@ -10,7 +10,7 @@ KEY_FILE = "/cert/private.der"
 MQTT_CLIENT_ID = "demo-vorlesung"
 MQTT_PORT = 8883
 
-MQTT_HOST = "a3udkd716so00o-ats.iot.eu-central-1.amazonaws.com"
+MQTT_HOST = "????"
 
 
 def connect_mqtt():
