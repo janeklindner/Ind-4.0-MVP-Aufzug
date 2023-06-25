@@ -5,4 +5,7 @@ Der Code dient zum Auslesen von Daten folgender Sensoren:
 
 - Bewegungsmelder (HC-SR501) ![image](https://github.com/janeklindner/Ind-4.0-MVP-Aufzug/assets/137683634/2a992a93-cff5-4c85-a336-c33b90d11f37).
 
+Für die Datenverarbeitung und Weiterleitung an die AWS-Konsole wurde ein ESP8266 eingesetzt:
+![image](https://github.com/janeklindner/Ind-4.0-MVP-Aufzug/assets/137683634/181b810a-fa12-4b46-8c54-bc61d85462c5)
+
 
