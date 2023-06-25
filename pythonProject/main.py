@@ -1,14 +1,12 @@
 import json
 import time
 import bmp280 as bmp280
-import mpu6050
 import mqtt
 import wifi
 from machine import RTC, Pin, I2C
 
 # This template assumes the following file setup
 # - main.py
-# - mpu6050.py
 # - bmp280.py
 # - wifi.py
 # - mqtt.py
@@ -22,7 +20,6 @@ MQTT_TOPIC = "environment-data"
 # construct an I2C bus
 i2c = I2C(scl=Pin(5), sda=Pin(4), freq=100000)
 bmp280 = bmp280.BMP280(i2c)
-mpu = mpu6050.accel(i2c)
 pir = Pin(0, Pin.IN, Pin.PULL_UP) # enable internal pull-up resistor
 
 def convert_to_iso(datetime):
@@ -43,21 +40,14 @@ def measure_environment_data():
     pres = bmp280.getPress()
     alt = bmp280.getAlti()
     occ = pir.value()
-    values = mpu.get_values()  
-    gyx = values["GyX"]
-    gyy = values["GyY"]
-    gyz = values["GyZ"]
-    acx = values["AcX"]
-    acy = values["AcY"]
-    acz = values["AcZ"]
 
-    return temp, pres, alt, occ, gyx, gyy, gyz, acx, acy, acz
+    return temp, pres, alt, occ
 
 def publish_environment_data(mqtt_client):
     data = measure_environment_data()
     iso_timestamp = convert_to_iso(RTC().datetime())
 
-    message = {"temperature": data[0], "pressure": data[1], "altitude": data[2], "occupancy": data[3], "gyx": data[4], "gyy": data[5], "gyz": data[6], "acx": data[7], "acy": data[8], "acz": data[9],"timestamp": iso_timestamp}
+    message = {"temperature": data[0], "pressure": data[1], "altitude": data[2], "occupancy": data[3], "timestamp": iso_timestamp}
     mqtt_client.publish(MQTT_TOPIC, json.dumps(message))
 
 
